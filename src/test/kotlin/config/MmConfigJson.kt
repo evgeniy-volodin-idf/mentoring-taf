@@ -19,7 +19,12 @@ class MmConfigJson {
         },
         {
           Assertions.assertEquals(authUser.user, "moneyman")
-
+        },
+        {
+          Assertions.assertEquals(host, "qa-delivery-mx-master.moneyman.ru")
+        },
+        {
+          Assertions.assertEquals(oneMoreField, "One more field")
         }
       )
     }

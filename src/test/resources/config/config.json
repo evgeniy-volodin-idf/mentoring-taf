@@ -1,6 +1,8 @@
 {
+  "app_host": "qa-delivery-mx-master.moneyman.ru",
   "authUser": {
     "user": "moneyman",
     "pass": 1005
-  }
+  },
+  "junkConfig": "Junk config"
 }

@@ -19,7 +19,9 @@ class MmConfigYaml {
         },
         {
           Assertions.assertEquals(authUser.user, "moneyman")
-
+        },
+        {
+          Assertions.assertEquals(host, "qa-delivery-mx-master.moneyman.ru")
         }
       )
     }
