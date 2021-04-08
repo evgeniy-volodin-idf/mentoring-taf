@@ -1,5 +1,8 @@
+val jacksonVersion: String by project
+val junitVersion: String by project
+
 plugins {
-  kotlin("jvm") version "1.4.10"
+  kotlin("jvm") version "1.4.32"
 }
 
 group = "org.example"
@@ -11,10 +14,10 @@ repositories {
 
 dependencies {
   implementation(kotlin("stdlib"))
-  implementation("com.fasterxml.jackson.core:jackson-databind:2.12.2")
-  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.12.2")
-  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.12.2")
-  testImplementation("org.junit.jupiter:junit-jupiter-engine:5.7.0-M1")
-  testImplementation("org.junit.jupiter:junit-jupiter-api:5.7.0-M1")
-  testImplementation("org.junit.jupiter:junit-jupiter-params:5.7.0-M1")
+  implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+  implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
+  implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+  testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+  testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+  testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
 }

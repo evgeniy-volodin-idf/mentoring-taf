@@ -1,6 +1,6 @@
 package config
 
-import core.config.AuthorisationUser
+import core.config.AppConfig
 import core.config.FileType
 import core.config.YamlConfig
 import org.junit.jupiter.api.Assertions
@@ -9,18 +9,19 @@ import org.junit.jupiter.api.assertAll
 
 class MmConfigYaml {
   @Test
-  fun jsonConfigCheck() {
-    val config: AuthorisationUser = YamlConfig().getConfig(FileType.YAML)
+  fun yamlConfigCheck() {
+    val config: AppConfig = YamlConfig().getConfig(FileType.YAML)
 
     config.apply {
       assertAll(
         {
-          Assertions.assertEquals(pass, "1005")
+          Assertions.assertEquals(authUser.pass, "1005")
         },
         {
-          Assertions.assertEquals(user, "moneyman")
+          Assertions.assertEquals(authUser.user, "moneyman")
 
-        })
+        }
+      )
     }
   }
 }

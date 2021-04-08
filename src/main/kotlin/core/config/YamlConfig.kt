@@ -6,11 +6,11 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import core.configProvider.ApplicationConfigProvider
 
 class YamlConfig : ApplicationConfigProvider {
-  override fun getConfig(fileType: FileType): AuthorisationUser {
+  override fun getConfig(fileType: FileType): AppConfig {
     return Thread.currentThread().contextClassLoader.getResourceAsStream(fileType.filePath)?.use {
       ObjectMapper(YAMLFactory())
         .registerModule(KotlinModule())
-        .readValue(it, AuthorisationUser::class.java)
+        .readValue(it, AppConfig::class.java)
     } ?: throw IllegalStateException("Could not get Application Config object")
   }
 }

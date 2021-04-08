@@ -1,4 +1,6 @@
 {
-  "user": "moneyman",
-  "pass": 1005
+  "authUser": {
+    "user": "moneyman",
+    "pass": 1005
+  }
 }

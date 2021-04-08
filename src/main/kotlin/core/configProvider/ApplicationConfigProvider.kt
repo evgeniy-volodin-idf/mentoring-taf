@@ -1,8 +1,8 @@
 package core.configProvider
 
-import core.config.AuthorisationUser
+import core.config.AppConfig
 import core.config.FileType
 
 interface ApplicationConfigProvider {
-  fun getConfig(fileType: FileType): AuthorisationUser
+  fun getConfig(fileType: FileType): AppConfig
 }
