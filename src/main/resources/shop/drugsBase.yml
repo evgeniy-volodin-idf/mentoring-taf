@@ -1,0 +1,11 @@
+product:
+  - productName: LSD
+    price: 100
+    quantity: 1500
+    dateReceived: 343
+    dateSold: 2342
+  - productName: COCAINE
+    price: 100
+    quantity: 1500
+    dateReceived: 343
+    dateSold: 2342
