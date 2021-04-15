@@ -1,10 +1,15 @@
 package shop
 
 import shop.model.Drug
-import shop.model.Product
 
 interface Warehouse {
-  fun getDrugs(): Product?
+  fun getDrugs(): List<Drug>
 
-  fun setDrugs()
+  fun showActualDrugs()
+
+  fun isDrugExist(drugName: String): Boolean
+
+  fun getSelectedDrug(selectedDrug: String, selectedQuantity: Int): Drug
+
+  fun isQuantityExist(selectedDrug: String, selectedQuantity: String): Boolean
 }

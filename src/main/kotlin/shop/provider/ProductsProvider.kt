@@ -1,7 +1,7 @@
 package shop.provider
 
-import shop.model.Product
+import shop.model.Drug
 
 interface ProductsProvider {
-  fun loadDrugsFromFile(): Product
+  fun loadDrugsFromFile(): List<Drug>
 }
