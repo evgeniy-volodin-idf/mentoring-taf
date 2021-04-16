@@ -1,14 +1,20 @@
 package shop
 
 fun main() {
-//  while (true) {
   val seller: Seller = DefaultSeller()
-  print("Press Enter to see our stuff")
-  while (readLine() != "Shut up and take my money") {
+  printlnYellow("Welcome to Best shop in DarkNet. Press Enter to see our shit" )
+  var inputMain = readLine()!!
+  while (inputMain != "Exit") {
     seller.printListOfDrugs()
     seller.selectDrug()
-//    seller.addDrugToCart(cart)
-    println("Press Enter to continue shopping. Type 'Shut up and take my money' to switch to order payment process")
+    printlnYellow(
+      "Press Enter to continue shopping. Type 'Exit' to quit. Type 'Shut up and take my money' to switch to order" +
+          " payment process"
+    )
+    inputMain = readLine()!!
+    if (inputMain == "Shut up and take my money") {
+      seller.confirmOrder()
+    }
   }
 //    cart.printReceipt()
 //    cart.printReceipt()

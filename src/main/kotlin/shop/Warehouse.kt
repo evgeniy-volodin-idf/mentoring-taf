@@ -7,9 +7,11 @@ interface Warehouse {
 
   fun showActualDrugs()
 
-  fun isDrugExist(drugName: String): Boolean
+  fun isDrugExists(drugName: String): Boolean
 
   fun getSelectedDrug(selectedDrug: String, selectedQuantity: Int): Drug
 
   fun isQuantityExist(selectedDrug: String, selectedQuantity: String): Boolean
+
+  fun dismissOrder(cart: Cart)
 }

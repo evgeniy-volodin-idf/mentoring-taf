@@ -17,29 +17,41 @@ class DefaultWarehouse : Warehouse {
     }
   }
 
-  override fun isDrugExist(drugName: String): Boolean {
-    var bool = false
+  override fun isDrugExists(drugName: String): Boolean {
     if (DrugType.values().find { it.name == drugName } != null) {
-      val drugType = DrugType.valueOf(drugName)
-      bool = drugsInWarehouse.find { it.productName == drugType } != null
+      return getDrugByName(drugName) != null
     }
-    return bool
+    return false
   }
 
   override fun isQuantityExist(selectedDrug: String, selectedQuantity: String): Boolean {
-    return drugsInWarehouse.find { it.productName == DrugType.valueOf(selectedDrug) }!!.quantity >= selectedQuantity
-    .toInt()
+    val requiredQuantity = selectedQuantity.toInt()
+    return getDrugByName(selectedDrug)!!.quantity >= requiredQuantity
   }
 
   override fun getSelectedDrug(selectedDrug: String, selectedQuantity: Int): Drug {
-    val drugType = DrugType.valueOf(selectedDrug)
     val drug: Drug
-    val drugInStock: Drug = drugsInWarehouse.find { it.productName == drugType }!!
+    val drugInStock: Drug = getDrugByName(selectedDrug)!!
     drugInStock.apply {
       quantity -= selectedQuantity
     }.also {
-      drug = Drug(productName = it.productName, price = it.price, quantity = selectedQuantity)
+      drug = Drug(
+        productName = it.productName,
+        price = it.price,
+        quantity = selectedQuantity,
+        dateReceived = it.dateReceived
+      )
     }
     return drug
+  }
+
+  override fun dismissOrder(cart: Cart) {
+    cart.getListOfDrugsInCart().onEach {
+      getDrugByName(it.productName.toString())!!.quantity += it.quantity
+    }
+  }
+
+  private fun getDrugByName(drugName: String): Drug? {
+    return drugsInWarehouse.find { it.productName.name == drugName }
   }
 }

@@ -7,7 +7,11 @@ interface Cart {
 
   fun addPosition(drug: Drug)
 
-  fun pay()
+  fun printCart()
 
   fun printReceipt()
+
+  fun addToSoldDrugs()
+
+  fun clearCart()
 }

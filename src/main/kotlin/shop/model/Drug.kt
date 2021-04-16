@@ -1,10 +1,12 @@
 package shop.model
 
+import java.time.LocalDateTime
+
 data class Drug(
   val productName: DrugType,
   val price: Int,
   var quantity: Int,
-  var dateReceived: String? = null,
+  val dateReceived: LocalDateTime = LocalDateTime.now(),
   var dateSold: String? = null
 )
 

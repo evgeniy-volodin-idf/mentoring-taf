@@ -6,4 +6,6 @@ interface Seller {
   fun printListOfDrugs()
 
   fun selectDrug()
+
+  fun confirmOrder()
 }
