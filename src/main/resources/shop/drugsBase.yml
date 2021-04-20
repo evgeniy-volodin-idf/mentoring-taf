@@ -1,0 +1,16 @@
+stock:
+  - productName: LSD
+    price: 100
+    quantity: 1500
+  - productName: COCAINE
+    price: 100
+    quantity: 1500
+  - productName: CANNABIS
+    price: 35
+    quantity: 3000
+  - productName: PSILOCYBIN
+    price: 55
+    quantity: 500
+  - productName: COOKIES
+    price: 5
+    quantity: 100
