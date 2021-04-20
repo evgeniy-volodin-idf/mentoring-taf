@@ -1,20 +1,15 @@
 package shop
 
+import shop.context.ContextHolder
 import shop.model.Drug
 import shop.model.DrugType
-import shop.provider.WarehouseProvider
 
-class DefaultWarehouse : Warehouse {
-  private var drugsInWarehouse: List<Drug> = WarehouseProvider().loadDrugsFromFile()
-
-  override fun getDrugs(): List<Drug> {
-    return drugsInWarehouse
-  }
+class DefaultWarehouse(
+  private val drugsInWarehouse: List<Drug> = ContextHolder.getContext().drugsInWarehouse
+) : Warehouse {
 
   override fun showActualDrugs() {
-    drugsInWarehouse.forEach {
-      println(it)
-    }
+    drugsInWarehouse.forEach(::println)
   }
 
   override fun isDrugExists(drugName: String): Boolean {
@@ -25,7 +20,7 @@ class DefaultWarehouse : Warehouse {
   }
 
   override fun isQuantityExist(selectedDrug: String, selectedQuantity: String): Boolean {
-    val requiredQuantity = selectedQuantity.toInt()
+    val requiredQuantity = selectedQuantity.toLong()
     return getDrugByName(selectedDrug)!!.quantity >= requiredQuantity
   }
 
@@ -45,8 +40,8 @@ class DefaultWarehouse : Warehouse {
     return drug
   }
 
-  override fun dismissOrder(cart: Cart) {
-    cart.getListOfDrugsInCart().onEach {
+  override fun dismissOrder(listOfDrugs: List<Drug>) {
+    listOfDrugs.onEach {
       getDrugByName(it.productName.toString())!!.quantity += it.quantity
     }
   }

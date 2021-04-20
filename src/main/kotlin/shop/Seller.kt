@@ -5,7 +5,7 @@ import shop.model.Drug
 interface Seller {
   fun printListOfDrugs()
 
-  fun selectDrug()
+  fun selectDrugAndQuantity()
 
   fun confirmOrder()
 }

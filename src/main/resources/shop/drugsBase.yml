@@ -11,3 +11,6 @@ stock:
   - productName: PSILOCYBIN
     price: 55
     quantity: 500
+  - productName: COOKIES
+    price: 5
+    quantity: 100

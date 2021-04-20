@@ -1,11 +1,11 @@
 package shop
 
+import shop.context.ContextHolder.getContext
 import shop.model.Drug
 import java.time.LocalDateTime
 
 class DefaultCart : Cart {
   private var listOfOrderedPosition: MutableList<Drug> = mutableListOf()
-  private var soldDrugs: MutableList<Drug> = mutableListOf()
 
   override fun getListOfDrugsInCart(): MutableList<Drug> {
     return listOfOrderedPosition
@@ -21,16 +21,15 @@ class DefaultCart : Cart {
 
   override fun printReceipt() {
     println("Receipt:")
-    soldDrugs.forEach{
-      println(it)
-    }
+    getContext().soldDrugs.forEach(::println)
   }
 
   override fun addToSoldDrugs() {
     val soldDate = LocalDateTime.now().toString()
-    listOfOrderedPosition.onEach {
-      soldDrugs.add(it) }.onEach {
-      it.dateSold = soldDate }
+    listOfOrderedPosition.forEach {
+      it.dateSold = soldDate
+    }
+    getContext().soldDrugs.addAll(listOfOrderedPosition)
   }
 
   override fun clearCart() {

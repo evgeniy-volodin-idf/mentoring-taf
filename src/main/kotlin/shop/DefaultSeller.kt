@@ -2,28 +2,18 @@ package shop
 
 import shop.model.Drug
 
-class DefaultSeller : Seller {
+class DefaultSeller(
+  private val cart: Cart = DefaultCart(),
   private val warehouse: Warehouse = DefaultWarehouse()
-  private val cart: Cart = DefaultCart()
+) : Seller {
 
   override fun printListOfDrugs() {
     warehouse.showActualDrugs()
   }
 
-  override fun selectDrug() {
-    printlnYellow("Select drug from list above. Enter Drug name and press Enter")
-    var selectedDrug = readLineFromConsole()
-    while (!warehouse.isDrugExists(selectedDrug)) {
-      printlnRed("Keep calm dude, try input correct name")
-      selectedDrug = readLineFromConsole()
-    }
-    printlnYellow("Enter Quantity and press Enter")
-    var selectedQuantity = readLineFromConsole()
-    while (!warehouse.isQuantityExist(selectedDrug, selectedQuantity)) {
-      printlnRed("Easy, Tiger! Select correct quantity")
-      selectedQuantity = readLineFromConsole()
-    }
-    val selectedQuantityInt = selectedQuantity.toInt()
+  override fun selectDrugAndQuantity() {
+    val selectedDrug = selectDrug()
+    val selectedQuantityInt = selectQuantity(selectedDrug)
     val drug: Drug = warehouse.getSelectedDrug(selectedDrug, selectedQuantityInt)
     cart.addPosition(drug)
     println("$drug is added to Cart")
@@ -35,21 +25,19 @@ class DefaultSeller : Seller {
     printlnYellow("Confirm payment. Type YES to pay; NO to cancel payment")
     var count = 0
     var choice = "NO"
-    while (choice == "NO" && count < 3) {
+    while (choice != "YES" && count < 3) {
       choice = readLineFromConsole()
-      if (choice == "NO" && count == 0) {
-        printlnRed("Are you sure man? It's are good shit. Type YES to pay; NO to cancel payment")
+      when {
+        choice == "NO" && count == 0 -> printlnRed("Are you sure man? It's are good shit. Type YES to pay; NO to cancel payment")
+        choice == "NO" && count == 1 -> printlnRed("Hey bro! Do you respect me? Type YES to respect; NO (not recommended) $")
+        choice == "NO" && count == 2 -> {
+          printlnRed("It's a big mistake! Order is canceled")
+          warehouse.dismissOrder(cart.getListOfDrugsInCart())
+          cart.clearCart()
+        }
+        else -> printlnRed("Hey Bro, don't understand what you are mumbling there. YES or NO")
       }
-      if (choice == "NO" && count == 1) {
-        printlnRed("Hey bro! Do you respect me? Type YES to respect; NO (not recommended) $")
-      }
-      if (choice == "NO" && count == 2) {
-        printlnRed("It's a big mistake! Order is canceled")
-        warehouse.dismissOrder(cart)
-        warehouse.showActualDrugs()
-        cart.clearCart()
-      }
-      count++
+      if (choice == "NO") count++
     }
     if (choice == "YES") {
       cart.addToSoldDrugs()
@@ -57,6 +45,32 @@ class DefaultSeller : Seller {
       cart.clearCart()
       printlnYellow("Order is payed. Good luck, have fun!!!")
     }
+  }
+
+  private fun selectDrug(): String {
+    printlnYellow("Select drug from list above. Enter Drug name and press Enter")
+    var selectedDrug = ""
+    var isDrugFound = false
+    while (!isDrugFound) {
+      selectedDrug = readLineFromConsole()
+      isDrugFound = warehouse.isDrugExists(selectedDrug)
+      if (!isDrugFound)
+        printlnRed("Keep calm dude, try input correct name")
+    }
+    return selectedDrug
+  }
+
+  private fun selectQuantity(selectedDrug: String): Int {
+    printlnYellow("Enter Quantity and press Enter")
+    var selectedQuantity = ""
+    var isQuantityCorrect = false
+    while (!isQuantityCorrect) {
+      selectedQuantity = readLineFromConsole()
+      isQuantityCorrect = warehouse.isQuantityExist(selectedDrug, selectedQuantity)
+      if (!isQuantityCorrect)
+        printlnRed("Easy, Tiger! Select correct quantity")
+    }
+    return selectedQuantity.toInt()
   }
 
   private fun readLineFromConsole(): String {

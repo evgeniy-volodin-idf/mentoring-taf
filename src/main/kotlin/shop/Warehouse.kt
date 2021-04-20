@@ -3,7 +3,6 @@ package shop
 import shop.model.Drug
 
 interface Warehouse {
-  fun getDrugs(): List<Drug>
 
   fun showActualDrugs()
 
@@ -13,5 +12,5 @@ interface Warehouse {
 
   fun isQuantityExist(selectedDrug: String, selectedQuantity: String): Boolean
 
-  fun dismissOrder(cart: Cart)
+  fun dismissOrder(listOfDrugs: List<Drug>)
 }
