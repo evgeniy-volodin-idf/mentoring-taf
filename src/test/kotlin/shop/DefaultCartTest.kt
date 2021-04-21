@@ -1,12 +1,14 @@
 package shop
 
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import shop.context.ContextHolder
 import shop.model.Drug
 
 internal class DefaultCartTest {
   private lateinit var cart: DefaultCart
-  private lateinit var fakeDrugOrder: MutableList<Drug>
   private lateinit var drugToAdd: Drug
 
   @BeforeEach
@@ -16,12 +18,8 @@ internal class DefaultCartTest {
       price = 10,
       quantity = 100
     )
-    fakeDrugOrder = mutableListOf(drugToAdd)
-    cart = DefaultCart(fakeDrugOrder)
-  }
-
-  @AfterEach
-  fun tearDown() {
+    cart = DefaultCart()
+    cart.addPosition(drugToAdd)
   }
 
   @Test
@@ -40,7 +38,7 @@ internal class DefaultCartTest {
           )
         },
         {
-          Assertions.assertTrue(drugToAdd.dateSold != null, "dateSold is not setted")
+          Assertions.assertTrue(drugToAdd.dateSold != null, "dateSold is not set")
         }
       )
     }

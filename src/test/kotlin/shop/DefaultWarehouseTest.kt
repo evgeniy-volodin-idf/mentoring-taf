@@ -1,27 +1,26 @@
 package shop
 
-import org.junit.jupiter.api.*
+import org.junit.jupiter.api.Assertions
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 import shop.model.Drug
 import shop.model.DrugType
 
 internal class DefaultWarehouseTest {
   private lateinit var warehouse: DefaultWarehouse
   private lateinit var fakeDrugsInWarehouse: List<Drug>
-  private lateinit var drugToAddInFakeW: Drug
+  private lateinit var drugToAddInFakeWarehouse: Drug
 
   @BeforeEach
   fun setUp() {
-    drugToAddInFakeW = Drug(
+    drugToAddInFakeWarehouse = Drug(
       productName = DrugType.LSD,
       price = 10,
       quantity = 100
     )
-    fakeDrugsInWarehouse = listOf(drugToAddInFakeW)
+    fakeDrugsInWarehouse = listOf(drugToAddInFakeWarehouse)
     warehouse = DefaultWarehouse(drugsInWarehouse = fakeDrugsInWarehouse)
-  }
-
-  @AfterEach
-  fun tearDown() {
   }
 
   @Test
@@ -62,7 +61,7 @@ internal class DefaultWarehouseTest {
   }
 
   @Test
-  fun `isQuantityExist failed with Exception when provided Drug name is not in warehouse`() {
+  fun `isQuantityExist throws exception when provided Drug name is not in warehouse`() {
     val drugName = "TEST"
     val quantity = "5"
     Assertions.assertThrows(NullPointerException::class.java) { warehouse.isQuantityExist(drugName, quantity) }
@@ -72,7 +71,7 @@ internal class DefaultWarehouseTest {
   fun `getSelectedDrug return 'Drug' with provided name and quantity`() {
     val drugName: String = DrugType.LSD.name
     val expectedQuantity = 5
-    val expectedBalance = 95
+    val expectedBalance = drugToAddInFakeWarehouse.quantity - expectedQuantity
     warehouse.getSelectedDrug(drugName, expectedQuantity).apply {
       assertAll(
         {
@@ -99,17 +98,16 @@ internal class DefaultWarehouseTest {
 
   @Test
   fun dismissOrder() {
-    val listOfDrugsToDismiss: List<Drug> = listOf(
-      Drug(
-        productName = DrugType.LSD,
-        price = 10,
-        quantity = 10
-      )
+    val drugToAddToDismissList = Drug(
+      productName = DrugType.LSD,
+      price = 10,
+      quantity = 10
     )
-    val expectedQuantityTotal = 110
-    warehouse.dismissOrder(listOfDrugsToDismiss)
+    val listOfDrugsToDismiss: List<Drug> = listOf(drugToAddToDismissList)
+    val expectedQuantityTotal = drugToAddInFakeWarehouse.quantity + drugToAddToDismissList.quantity
+        warehouse.dismissOrder(listOfDrugsToDismiss)
     Assertions.assertEquals(
-      drugToAddInFakeW.quantity,
+      drugToAddInFakeWarehouse.quantity,
       expectedQuantityTotal,
       "Quantity of drugs is incorrect after dismissing order"
     )

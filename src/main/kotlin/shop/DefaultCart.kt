@@ -1,10 +1,13 @@
 package shop
 
+import shop.context.Context
 import shop.context.ContextHolder.getContext
 import shop.model.Drug
 import java.time.LocalDateTime
 
-class DefaultCart(private var listOfOrderedPosition: MutableList<Drug> = mutableListOf()) : Cart {
+class DefaultCart(private var appContext: Context = getContext()) : Cart {
+
+  private var listOfOrderedPosition: MutableList<Drug> = mutableListOf()
 
   override fun getListOfDrugsInCart(): MutableList<Drug> {
     return listOfOrderedPosition
@@ -28,7 +31,7 @@ class DefaultCart(private var listOfOrderedPosition: MutableList<Drug> = mutable
     listOfOrderedPosition.forEach {
       it.dateSold = soldDate
     }
-    getContext().soldDrugs.addAll(listOfOrderedPosition)
+    appContext.soldDrugs.addAll(listOfOrderedPosition)
   }
 
   override fun clearCart() {
