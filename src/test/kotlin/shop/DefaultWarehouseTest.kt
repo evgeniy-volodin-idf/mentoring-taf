@@ -4,19 +4,19 @@ import org.junit.jupiter.api.*
 import shop.model.Drug
 import shop.model.DrugType
 
-internal class DefaultWarehouseTest() {
+internal class DefaultWarehouseTest {
   private lateinit var warehouse: DefaultWarehouse
   private lateinit var fakeDrugsInWarehouse: List<Drug>
+  private lateinit var drugToAddInFakeW: Drug
 
   @BeforeEach
   fun setUp() {
-    fakeDrugsInWarehouse = listOf(
-      Drug(
-        productName = DrugType.LSD,
-        price = 10,
-        quantity = 100
-      )
+    drugToAddInFakeW = Drug(
+      productName = DrugType.LSD,
+      price = 10,
+      quantity = 100
     )
+    fakeDrugsInWarehouse = listOf(drugToAddInFakeW)
     warehouse = DefaultWarehouse(drugsInWarehouse = fakeDrugsInWarehouse)
   }
 
@@ -31,8 +31,14 @@ internal class DefaultWarehouseTest() {
   }
 
   @Test
-  fun `isDrugExists return 'false' when invalid Drug name provided`() {
+  fun `isDrugExists return 'false' when provided Drug name not exists in warehouse`() {
     val drugName: String = DrugType.CANNABIS.name
+    Assertions.assertFalse(warehouse.isDrugExists(drugName), "Return 'true' with invalid Drug name")
+  }
+
+  @Test
+  fun `isDrugExists return 'false' when provided Drug name is invalid`() {
+    val drugName = "TEST"
     Assertions.assertFalse(warehouse.isDrugExists(drugName), "Return 'true' with invalid Drug name")
   }
 
@@ -41,8 +47,8 @@ internal class DefaultWarehouseTest() {
     val drugName: String = DrugType.LSD.name
     val quantity = "5"
     Assertions.assertTrue(
-      warehouse.isQuantityExist(drugName, quantity), "Return 'false' with quantity less or equal " +
-          "drug quantity in warehouse"
+      warehouse.isQuantityExist(drugName, quantity),
+      "Return 'false' with quantity less or equal drug quantity in warehouse"
     )
   }
 
@@ -56,29 +62,34 @@ internal class DefaultWarehouseTest() {
   }
 
   @Test
+  fun `isQuantityExist failed with Exception when provided Drug name is not in warehouse`() {
+    val drugName = "TEST"
+    val quantity = "5"
+    Assertions.assertThrows(NullPointerException::class.java) { warehouse.isQuantityExist(drugName, quantity) }
+  }
+
+  @Test
   fun `getSelectedDrug return 'Drug' with provided name and quantity`() {
     val drugName: String = DrugType.LSD.name
-    val quantity = 5
-    val balance = 95
-    warehouse.apply {
+    val expectedQuantity = 5
+    val expectedBalance = 95
+    warehouse.getSelectedDrug(drugName, expectedQuantity).apply {
       assertAll(
         {
-          getSelectedDrug(drugName, quantity).apply {
-            Assertions.assertTrue(
-              balance == fakeDrugsInWarehouse.find { it.productName.name == drugName }!!.quantity,
-              "Balance in warehouse calculated incorrectly"
-            )
-          }
+          Assertions.assertEquals(
+            expectedBalance, fakeDrugsInWarehouse.find { it.productName.name == drugName }!!.quantity,
+            "Balance in warehouse calculated incorrectly"
+          )
         },
         {
           Assertions.assertEquals(
-            getSelectedDrug(drugName, quantity).productName, DrugType.LSD,
+            productName.name, drugName,
             "Return drug with incorrect name"
           )
         },
         {
           Assertions.assertEquals(
-            getSelectedDrug(drugName, quantity).quantity, quantity,
+            expectedQuantity, quantity,
             "Return drug with incorrect quantity"
           )
         }
@@ -88,18 +99,19 @@ internal class DefaultWarehouseTest() {
 
   @Test
   fun dismissOrder() {
-    val fakeCart: List<Drug> = listOf(
+    val listOfDrugsToDismiss: List<Drug> = listOf(
       Drug(
         productName = DrugType.LSD,
         price = 10,
         quantity = 10
       )
     )
-    val quantityTotal = 110
-    val drugName: DrugType = DrugType.LSD
-    warehouse.dismissOrder(fakeCart)
-    Assertions.assertTrue(fakeDrugsInWarehouse.find {
-      it.productName == drugName
-    }!!.quantity == quantityTotal, "Quantity of drugs is incorrect after dismissing order")
+    val expectedQuantityTotal = 110
+    warehouse.dismissOrder(listOfDrugsToDismiss)
+    Assertions.assertEquals(
+      drugToAddInFakeW.quantity,
+      expectedQuantityTotal,
+      "Quantity of drugs is incorrect after dismissing order"
+    )
   }
 }

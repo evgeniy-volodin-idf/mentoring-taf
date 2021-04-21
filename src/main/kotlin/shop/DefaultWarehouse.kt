@@ -3,6 +3,7 @@ package shop
 import shop.context.ContextHolder
 import shop.model.Drug
 import shop.model.DrugType
+import java.lang.NullPointerException
 
 class DefaultWarehouse(
   private val drugsInWarehouse: List<Drug> = ContextHolder.getContext().drugsInWarehouse
@@ -21,7 +22,9 @@ class DefaultWarehouse(
 
   override fun isQuantityExist(selectedDrug: String, selectedQuantity: String): Boolean {
     val requiredQuantity = selectedQuantity.toLong()
-    return getDrugByName(selectedDrug)!!.quantity >= requiredQuantity
+    val quantityOfSelectedDrug = if (getDrugByName(selectedDrug) != null) {getDrugByName(selectedDrug)!!.quantity}
+    else throw NullPointerException ("$selectedDrug is not exist in warehouse")
+    return quantityOfSelectedDrug >= requiredQuantity
   }
 
   override fun getSelectedDrug(selectedDrug: String, selectedQuantity: Int): Drug {
