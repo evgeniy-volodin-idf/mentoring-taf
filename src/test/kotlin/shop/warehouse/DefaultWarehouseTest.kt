@@ -1,4 +1,4 @@
-package shop
+package shop.warehouse
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
@@ -105,7 +105,7 @@ internal class DefaultWarehouseTest {
     )
     val listOfDrugsToDismiss: List<Drug> = listOf(drugToAddToDismissList)
     val expectedQuantityTotal = drugToAddInFakeWarehouse.quantity + drugToAddToDismissList.quantity
-        warehouse.dismissOrder(listOfDrugsToDismiss)
+    warehouse.dismissOrder(listOfDrugsToDismiss)
     Assertions.assertEquals(
       drugToAddInFakeWarehouse.quantity,
       expectedQuantityTotal,

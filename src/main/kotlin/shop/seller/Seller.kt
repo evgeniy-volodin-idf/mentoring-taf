@@ -1,4 +1,4 @@
-package shop
+package shop.seller
 
 import shop.model.Drug
 

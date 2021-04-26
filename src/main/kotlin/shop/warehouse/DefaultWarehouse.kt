@@ -1,4 +1,4 @@
-package shop
+package shop.warehouse
 
 import shop.context.ContextHolder
 import shop.model.Drug

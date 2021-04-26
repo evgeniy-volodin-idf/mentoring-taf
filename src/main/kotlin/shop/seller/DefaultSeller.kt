@@ -1,6 +1,12 @@
-package shop
+package shop.seller
 
+import shop.warehouse.DefaultWarehouse
+import shop.warehouse.Warehouse
+import shop.cart.Cart
+import shop.cart.DefaultCart
 import shop.model.Drug
+import shop.printlnRed
+import shop.printlnYellow
 
 class DefaultSeller(
   private val cart: Cart = DefaultCart(),
@@ -40,7 +46,7 @@ class DefaultSeller(
       if (choice == "NO") count++
     }
     if (choice == "YES") {
-      cart.addToSoldDrugs()
+      cart.moveSoldDrugsToContext()
       cart.printReceipt()
       cart.clearCart()
       printlnYellow("Order is payed. Good luck, have fun!!!")

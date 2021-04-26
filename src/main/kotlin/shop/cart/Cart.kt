@@ -1,4 +1,4 @@
-package shop
+package shop.cart
 
 import shop.model.Drug
 
@@ -11,7 +11,7 @@ interface Cart {
 
   fun printReceipt()
 
-  fun addToSoldDrugs()
+  fun moveSoldDrugsToContext()
 
   fun clearCart()
 }

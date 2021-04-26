@@ -1,4 +1,4 @@
-package shop
+package shop.cart
 
 import shop.context.Context
 import shop.context.ContextHolder.getContext
@@ -26,12 +26,12 @@ class DefaultCart(private var appContext: Context = getContext()) : Cart {
     getContext().soldDrugs.forEach(::println)
   }
 
-  override fun addToSoldDrugs() {
+  override fun moveSoldDrugsToContext() {
     val soldDate = LocalDateTime.now().toString()
     listOfOrderedPosition.forEach {
       it.dateSold = soldDate
     }
-    appContext.soldDrugs.addAll(listOfOrderedPosition)
+    appContext.setSoldDrugsInContext(listOfOrderedPosition)
   }
 
   override fun clearCart() {
