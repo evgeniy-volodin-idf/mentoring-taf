@@ -69,7 +69,7 @@ internal class DefaultWarehouseTest {
 
   @Test
   fun `getSelectedDrug return 'Drug' with provided name and quantity`() {
-    val drugName: String = DrugType.LSD.name
+    val drugName: String = drugToAddInFakeWarehouse.productName.name
     val expectedQuantity = 5
     val expectedBalance = drugToAddInFakeWarehouse.quantity - expectedQuantity
     warehouse.getSelectedDrug(drugName, expectedQuantity).apply {

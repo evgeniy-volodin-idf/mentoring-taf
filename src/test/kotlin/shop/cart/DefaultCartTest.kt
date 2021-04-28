@@ -5,7 +5,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertAll
 import shop.context.Context
-import shop.context.EventManager
 import shop.model.Drug
 
 internal class DefaultCartTest {
@@ -21,8 +20,7 @@ internal class DefaultCartTest {
       quantity = 100
     )
     fakeContext = FakeContext(
-      soldDrugs = mutableListOf(), drugsInWarehouse = listOf(), event = EventManager(),
-      profit = 0
+      soldDrugs = mutableListOf(), drugsInWarehouse = listOf(), profit = 0
     )
     cart = DefaultCart(fakeContext)
     cart.addPosition(drugToAdd)
@@ -58,12 +56,7 @@ internal class DefaultCartTest {
   class FakeContext(
     override var soldDrugs: MutableList<Drug>,
     override val drugsInWarehouse: List<Drug>,
-    override val event: EventManager,
     override var profit: Long
-  ) : Context {
-    override fun setSoldDrugsInContext(soldDrugs: MutableList<Drug>) {
-      this.soldDrugs = soldDrugs
-    }
-  }
+  ) : Context
 }
 

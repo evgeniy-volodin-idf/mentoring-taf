@@ -1,12 +1,12 @@
 package shop.seller
 
-import shop.warehouse.DefaultWarehouse
-import shop.warehouse.Warehouse
 import shop.cart.Cart
 import shop.cart.DefaultCart
 import shop.model.Drug
 import shop.printlnRed
 import shop.printlnYellow
+import shop.warehouse.DefaultWarehouse
+import shop.warehouse.Warehouse
 
 class DefaultSeller(
   private val cart: Cart = DefaultCart(),
@@ -53,7 +53,7 @@ class DefaultSeller(
     }
   }
 
-  private fun selectDrug(): String {
+  fun selectDrug(): String {
     printlnYellow("Select drug from list above. Enter Drug name and press Enter")
     var selectedDrug = ""
     var isDrugFound = false
@@ -66,7 +66,7 @@ class DefaultSeller(
     return selectedDrug
   }
 
-  private fun selectQuantity(selectedDrug: String): Int {
+  fun selectQuantity(selectedDrug: String): Int {
     printlnYellow("Enter Quantity and press Enter")
     var selectedQuantity = ""
     var isQuantityCorrect = false
@@ -79,7 +79,7 @@ class DefaultSeller(
     return selectedQuantity.toInt()
   }
 
-  private fun readLineFromConsole(): String {
+  fun readLineFromConsole(): String {
     return readLine()!!.toString().toUpperCase()
   }
 }

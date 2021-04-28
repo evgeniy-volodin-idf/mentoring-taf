@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 val jacksonVersion: String by project
 val junitVersion: String by project
 val mockkVersion: String by project
@@ -25,7 +27,7 @@ dependencies {
 }
 
 tasks {
-  withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
+  withType<KotlinCompile> {
     kotlinOptions.jvmTarget = "1.8"
   }
 }

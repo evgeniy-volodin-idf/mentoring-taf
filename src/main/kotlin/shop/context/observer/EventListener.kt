@@ -1,4 +1,4 @@
-package shop.context
+package shop.context.observer
 
 import shop.model.Drug
 

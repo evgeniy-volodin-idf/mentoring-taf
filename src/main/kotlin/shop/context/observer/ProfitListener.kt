@@ -1,5 +1,6 @@
-package shop.context
+package shop.context.observer
 
+import shop.context.ContextHolder
 import shop.model.Drug
 
 class ProfitListener : EventListener {

@@ -1,10 +1,13 @@
 package shop.context
 
+import shop.context.observer.EventManager
+import shop.context.observer.EventType
+import shop.context.observer.ProfitListener
 import shop.model.Drug
 import shop.provider.WarehouseProvider
 
 class AppContext : Context {
-  override val event: EventManager = EventManager()
+  private val event: EventManager = EventManager()
 
   init {
     val profitListener = ProfitListener()
@@ -14,11 +17,10 @@ class AppContext : Context {
   override var profit: Long = 0
 
   override var soldDrugs: MutableList<Drug> = mutableListOf()
-
-  override fun setSoldDrugsInContext(soldDrugs: MutableList<Drug>) {
-    this.soldDrugs = soldDrugs
-    event.notifyUpdate(EventType.PROFIT, soldDrugs)
-  }
+    set(value) {
+      field = value
+      event.notifyUpdate(EventType.PROFIT, value)
+    }
 
   override val drugsInWarehouse: List<Drug> = WarehouseProvider().loadDrugsFromFile()
 }

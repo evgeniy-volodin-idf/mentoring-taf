@@ -31,7 +31,7 @@ class DefaultCart(private var appContext: Context = getContext()) : Cart {
     listOfOrderedPosition.forEach {
       it.dateSold = soldDate
     }
-    appContext.setSoldDrugsInContext(listOfOrderedPosition)
+    appContext.soldDrugs = listOfOrderedPosition
   }
 
   override fun clearCart() {
