@@ -53,7 +53,7 @@ internal class DefaultSellerTest {
   }
 
   @Test
-  fun selectDrug() {
+  fun `selectDrug with first invalid and second valid input`() {
     val seller: DefaultSeller = spyk(DefaultSeller(cart, warehouse), recordPrivateCalls = true)
     val expectedDrugName = DrugType.LSD.name
     every { seller["readLineFromConsole"]() } returns expectedDrugName
@@ -63,5 +63,18 @@ internal class DefaultSellerTest {
 
     verify(exactly = 2) { seller["readLineFromConsole"]() }
     verify(exactly = 2) { warehouse.isDrugExists(expectedDrugName) }
+  }
+
+  @Test
+  fun `selectDrug with valid input`() {
+    val seller: DefaultSeller = spyk(DefaultSeller(cart, warehouse), recordPrivateCalls = true)
+    val expectedDrugName = DrugType.LSD.name
+    every { seller["readLineFromConsole"]() } returns expectedDrugName
+    every { warehouse.isDrugExists(expectedDrugName) } returnsMany listOf(true)
+
+    seller.selectDrug()
+
+    verify(exactly = 1) { seller["readLineFromConsole"]() }
+    verify(exactly = 1) { warehouse.isDrugExists(expectedDrugName) }
   }
 }
