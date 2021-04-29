@@ -1,4 +1,4 @@
-package shop
+package shop.warehouse
 
 import shop.context.ContextHolder
 import shop.model.Drug
@@ -21,7 +21,9 @@ class DefaultWarehouse(
 
   override fun isQuantityExist(selectedDrug: String, selectedQuantity: String): Boolean {
     val requiredQuantity = selectedQuantity.toLong()
-    return getDrugByName(selectedDrug)!!.quantity >= requiredQuantity
+    val drugQuantity: Int =
+      getDrugByName(selectedDrug)?.quantity ?: throw NullPointerException("$selectedDrug is not exist in warehouse")
+    return drugQuantity >= requiredQuantity
   }
 
   override fun getSelectedDrug(selectedDrug: String, selectedQuantity: Int): Drug {

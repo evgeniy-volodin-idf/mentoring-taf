@@ -6,4 +6,6 @@ interface Context {
   var soldDrugs: MutableList<Drug>
 
   val drugsInWarehouse: List<Drug>
+
+  var profit: Long
 }

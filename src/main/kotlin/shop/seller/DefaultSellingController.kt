@@ -1,9 +1,12 @@
-package shop
+package shop.seller
+
+import shop.context.ContextHolder
+import shop.printlnYellow
 
 class DefaultSellingController : SellingController {
   override fun startSelling() {
     val seller: Seller = DefaultSeller()
-    printlnYellow("Welcome to Best shop in DarkNet. Press Enter to see our shit" )
+    printlnYellow("Welcome to Best shop in DarkNet. Press Enter to see our shit")
     var inputMain = readLine()!!
     while (inputMain != "Exit") {
       seller.printListOfDrugs()
@@ -18,6 +21,7 @@ class DefaultSellingController : SellingController {
       inputMain = readLine()!!
       if (inputMain == "Shut up and take my money") {
         seller.confirmOrder()
+        println(ContextHolder.getContext().profit)
       }
     }
   }

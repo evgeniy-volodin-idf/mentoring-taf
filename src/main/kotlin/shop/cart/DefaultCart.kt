@@ -1,10 +1,12 @@
-package shop
+package shop.cart
 
+import shop.context.Context
 import shop.context.ContextHolder.getContext
 import shop.model.Drug
 import java.time.LocalDateTime
 
-class DefaultCart : Cart {
+class DefaultCart(private var appContext: Context = getContext()) : Cart {
+
   private var listOfOrderedPosition: MutableList<Drug> = mutableListOf()
 
   override fun getListOfDrugsInCart(): MutableList<Drug> {
@@ -24,12 +26,12 @@ class DefaultCart : Cart {
     getContext().soldDrugs.forEach(::println)
   }
 
-  override fun addToSoldDrugs() {
+  override fun moveSoldDrugsToContext() {
     val soldDate = LocalDateTime.now().toString()
     listOfOrderedPosition.forEach {
       it.dateSold = soldDate
     }
-    getContext().soldDrugs.addAll(listOfOrderedPosition)
+    appContext.soldDrugs = listOfOrderedPosition
   }
 
   override fun clearCart() {
