@@ -27,9 +27,12 @@ internal class DefaultCartTest {
   }
 
   @Test
-  fun `addPosition return 'true' when Drug added to cart`() {
-    val exampleCart = listOf(drugToAdd)
-    Assertions.assertEquals(exampleCart, cart.getListOfDrugsInCart(), "Drug is not added to cart")
+  fun `addPosition return 'true' when Drug is added to cart`() {
+    val expectedDrugsInCardList = listOf(drugToAdd)
+    Assertions.assertEquals(
+      expectedDrugsInCardList, cart.getListOfDrugsInCart(),
+      "return 'false' when drug is not added to cart"
+    )
   }
 
   @Test
@@ -38,7 +41,7 @@ internal class DefaultCartTest {
     assertAll(
       {
         Assertions.assertEquals(
-          cart.getListOfDrugsInCart(), fakeContext.soldDrugs, "Cart is not save drugs to SoldData"
+          cart.getListOfDrugsInCart(), fakeContext.soldDrugs, "Cart do not save drugs to SoldData"
         )
       },
       {

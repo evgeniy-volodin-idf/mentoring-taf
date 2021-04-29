@@ -9,7 +9,6 @@ import io.mockk.just
 import io.mockk.spyk
 import io.mockk.verify
 import org.junit.jupiter.api.AfterEach
-import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import shop.cart.DefaultCart
@@ -24,10 +23,6 @@ internal class DefaultSellerTest {
 
   @MockK
   lateinit var cart: DefaultCart
-
-  @BeforeEach
-  fun setUp() {
-  }
 
   @AfterEach
   fun tearDown() {
@@ -59,13 +54,14 @@ internal class DefaultSellerTest {
 
   @Test
   fun selectDrug() {
-    val seller: DefaultSeller = spyk(DefaultSeller(cart, warehouse))
-    every { seller.readLineFromConsole() } returns "LSD"
-    every { warehouse.isDrugExists("LSD") } returnsMany listOf(false, true)
+    val seller: DefaultSeller = spyk(DefaultSeller(cart, warehouse), recordPrivateCalls = true)
+    val expectedDrugName = DrugType.LSD.name
+    every { seller["readLineFromConsole"]() } returns expectedDrugName
+    every { warehouse.isDrugExists(expectedDrugName) } returnsMany listOf(false, true)
 
     seller.selectDrug()
 
-    verify(exactly = 2) { seller.readLineFromConsole() }
-    verify(exactly = 2) { warehouse.isDrugExists("LSD") }
+    verify(exactly = 2) { seller["readLineFromConsole"]() }
+    verify(exactly = 2) { warehouse.isDrugExists(expectedDrugName) }
   }
 }

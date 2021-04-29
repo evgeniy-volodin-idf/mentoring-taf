@@ -79,7 +79,7 @@ class DefaultSeller(
     return selectedQuantity.toInt()
   }
 
-  fun readLineFromConsole(): String {
+  private fun readLineFromConsole(): String {
     return readLine()!!.toString().toUpperCase()
   }
 }

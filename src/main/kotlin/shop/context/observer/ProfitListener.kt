@@ -4,9 +4,10 @@ import shop.context.ContextHolder
 import shop.model.Drug
 
 class ProfitListener : EventListener {
-  override fun update(soldDrugs: List<Drug>) {
+  @Suppress("UNCHECKED_CAST")
+  override fun update(value: Any) {
     var temp: Long = 0
-    soldDrugs.forEach{ temp += it.quantity * it.price }
+    (value as List<Drug>).forEach { temp += it.quantity * it.price }
     ContextHolder.getContext().profit += temp
   }
 }

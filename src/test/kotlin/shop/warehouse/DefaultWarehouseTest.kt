@@ -69,31 +69,34 @@ internal class DefaultWarehouseTest {
 
   @Test
   fun `getSelectedDrug return 'Drug' with provided name and quantity`() {
-    val drugName: String = drugToAddInFakeWarehouse.productName.name
+    val expectedDrugName: String = drugToAddInFakeWarehouse.productName.name
     val expectedQuantity = 5
-    val expectedBalance = drugToAddInFakeWarehouse.quantity - expectedQuantity
-    warehouse.getSelectedDrug(drugName, expectedQuantity).apply {
+    val drugSelectedFromWarehouse = warehouse.getSelectedDrug(expectedDrugName, expectedQuantity)
+    drugSelectedFromWarehouse.apply {
       assertAll(
         {
-          Assertions.assertEquals(
-            expectedBalance, fakeDrugsInWarehouse.find { it.productName.name == drugName }!!.quantity,
-            "Balance in warehouse calculated incorrectly"
-          )
+          Assertions.assertEquals(expectedDrugName, productName.name, "Return drug with incorrect name")
         },
         {
-          Assertions.assertEquals(
-            productName.name, drugName,
-            "Return drug with incorrect name"
-          )
-        },
-        {
-          Assertions.assertEquals(
-            expectedQuantity, quantity,
-            "Return drug with incorrect quantity"
-          )
+          Assertions.assertEquals(expectedQuantity, quantity, "Return drug with incorrect quantity")
         }
       )
     }
+  }
+
+  @Test
+  fun `getSelectedDrug calculate drugs balance in warehouse`() {
+    val expectedDrugName: String = drugToAddInFakeWarehouse.productName.name
+    val expectedQuantity = 5
+    val expectedBalance: Int = drugToAddInFakeWarehouse.quantity - expectedQuantity
+    warehouse.getSelectedDrug(expectedDrugName, expectedQuantity)
+    val totalQuantityOfDrugInWarehouse =
+      fakeDrugsInWarehouse.find { it.productName.name == expectedDrugName }!!.quantity
+    Assertions.assertEquals(
+      expectedBalance,
+      totalQuantityOfDrugInWarehouse,
+      "Balance in warehouse calculated incorrectly"
+    )
   }
 
   @Test
@@ -107,8 +110,8 @@ internal class DefaultWarehouseTest {
     val expectedQuantityTotal = drugToAddInFakeWarehouse.quantity + drugToAddToDismissList.quantity
     warehouse.dismissOrder(listOfDrugsToDismiss)
     Assertions.assertEquals(
-      drugToAddInFakeWarehouse.quantity,
       expectedQuantityTotal,
+      drugToAddInFakeWarehouse.quantity,
       "Quantity of drugs is incorrect after dismissing order"
     )
   }
