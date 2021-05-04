@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver
 object WebDriverSingleton {
   private var instance: WebDriver? = null
 
-  fun getWebDriverInstance(): WebDriver {
+  fun getDriver(): WebDriver {
     if (instance == null) {
       instance = DriverConfiguration().getWebDriver()
     }

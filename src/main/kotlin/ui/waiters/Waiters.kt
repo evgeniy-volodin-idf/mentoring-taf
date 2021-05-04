@@ -6,12 +6,12 @@ import org.openqa.selenium.support.ui.ExpectedConditions
 import org.openqa.selenium.support.ui.WebDriverWait
 
 object Waiters {
-  private const val waitForElementsSec = 10
+  private const val WAIT_ELEMENT_SECONDS = 10
 
-  fun waitForElementVisible(driver: WebDriver, locator: By) {
+  fun waitForElementVisible(driver: WebDriver, locator: By, waitSecondsTimeout: Int = WAIT_ELEMENT_SECONDS) {
     WebDriverWait(
       driver,
-      waitForElementsSec.toLong()
+      waitSecondsTimeout.toLong()
     ).until(ExpectedConditions.visibilityOfElementLocated(locator))
   }
 }

@@ -2,48 +2,39 @@ package ui.po.landing
 
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
-import org.openqa.selenium.interactions.Action
-import org.openqa.selenium.interactions.Actions
+import org.openqa.selenium.WebElement
+import ui.assistants.clearInput
 import ui.po.ContactInformationPage
 import ui.waiters.Waiters
 
 class CalculatorBlock(private val driver: WebDriver) {
-  private val calculator: By = By.xpath("//div[@data-test-id=\"calculator\"]")
-  private val sliderAmount: By = By.xpath("//div[contains(@class, 'mainCalculator__sum')]/span")
-  private val amount: By = By.cssSelector("[data-test-id=\"calculator_amount\"]")
-  private val days: By = By.cssSelector("[data-test-id=\"calculator_days\"]")
-  private val sliderDays: By = By.cssSelector(".mainCalculator__date > span")
-  private val applyForYourLoanButton: By = By.cssSelector("[class=\"mainCalculator__center\"]")
-  private val lastLoadedElement: By = By.cssSelector("[class=\"mainCalculator__info__value\"]")
+  private val calculatorBaseBlock: By = By.xpath("//div[@data-test-id='calculator']")
+  private val amount: By = By.cssSelector("[data-test-id='calculator_amount']")
+  private val days: By = By.cssSelector("[data-test-id='calculator_days']")
+  private val applyForYourLoanButton: By = By.cssSelector("[class='mainCalculator__center']")
+  private val lastLoadedElement: By = By.cssSelector("[class='mainCalculator__info__value']")
+  private val amountElement: WebElement = driver.findElement(amount)
+  private val daysElement: WebElement = driver.findElement(days)
 
-  fun openURLWithBasicAuthentication(user: String, pass: String, url: String) {
-    driver.get("https://$user:$pass@$url")
-  }
-
-  fun verifyCalculator(): Boolean {
-    return driver.findElements(calculator).isNotEmpty()
-  }
-
-  fun verifyDefaultAmount(): String {
+  fun verifyCalculatorElementsLoaded(): Boolean {
     Waiters.waitForElementVisible(driver, lastLoadedElement)
-    return driver.findElement(amount).getAttribute("value").toString()
+    return driver.findElements(calculatorBaseBlock).isNotEmpty()
   }
 
-  fun verifyDefaultDays(): String {
-    Waiters.waitForElementVisible(driver, lastLoadedElement)
-    return driver.findElement(days).getAttribute("value")
+  fun getSetAmount(): String {
+    return amountElement.getAttribute("value")
   }
 
-  fun updateLoanAmount() {
-    val move = Actions(driver)
-    val action: Action = move.dragAndDropBy(driver.findElement(sliderAmount), 80, 0).build()
-    action.perform()
+  fun getSettDays(): String {
+    return daysElement.getAttribute("value")
   }
 
-  fun updateDays() {
-    val move = Actions(driver)
-    val action: Action = move.dragAndDropBy(driver.findElement(sliderDays), 80, 0).build()
-    action.perform()
+  fun updateLoanAmount(updatedAmount: String) {
+    clearInput(amountElement, updatedAmount)
+  }
+
+  fun updateDays(updatedDays: String) {
+    clearInput(daysElement, updatedDays)
   }
 
   fun clickApplyForYourLoanButton(): ContactInformationPage {

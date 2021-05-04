@@ -8,8 +8,11 @@ data class AppConfig(
   val authUser: AuthorisationUser,
   @JsonProperty("app_host")
   val host: String,
-  val oneMoreField: String = "One more field"
-)
+  val oneMoreField: String = "One more field",
+  val landingPageEndpoint: String
+) {
+  fun getBaseUrlWithBasicAuthentication() = "https://${authUser.user}:${authUser.pass}@$host$landingPageEndpoint"
+}
 
 data class AuthorisationUser(
   val user: String,
