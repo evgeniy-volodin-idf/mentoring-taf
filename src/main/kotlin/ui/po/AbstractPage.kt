@@ -6,6 +6,11 @@ import core.config.YamlConfig
 import org.openqa.selenium.WebDriver
 import ui.driver.WebDriverSingleton
 
-open class AbstractPage(val driver: WebDriver = WebDriverSingleton.getDriver()) {
-  protected val config: AppConfig = YamlConfig().getConfig(FileType.YAML)
+open class AbstractPage(
+  val driver: WebDriver = WebDriverSingleton.getDriver(),
+  val config: AppConfig = YamlConfig().getConfig(FileType.YAML)
+) {
+  open fun openPage() {
+    driver.get(config.getBaseUrlWithBasicAuthentication())
+  }
 }
