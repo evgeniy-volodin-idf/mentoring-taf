@@ -1,7 +1,10 @@
 package ui.po
 
+import com.codeborne.selenide.WebDriverRunner.url
+
 class ContactInformationPage : AbstractPage() {
   fun verifyURL(): Boolean {
-    return driver.currentUrl.endsWith("registration")
+
+    return url().endsWith("registration")
   }
 }

@@ -1,13 +1,14 @@
 package ui.po.landing
 
+import com.codeborne.selenide.Selenide.open
 import ui.po.AbstractPage
 
 class LandingPage() : AbstractPage() {
-  val calculatorBlock: CalculatorBlock by lazy { CalculatorBlock(driver) }
+  val calculatorBlock: CalculatorBlock by lazy { CalculatorBlock() }
 
   private val pageEndpoint = config.landingPageEndpoint
 
   override fun openPage() {
-    driver.get("${config.getBaseUrlWithBasicAuthentication()}$pageEndpoint")
+    open("${config.getBaseUrlWithBasicAuthentication()}$pageEndpoint")
   }
 }

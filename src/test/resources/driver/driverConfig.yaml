@@ -1,0 +1,8 @@
+browser: CHROME
+windowScreenSize: 1600x900
+#driver
+driverType: LOCAL
+webDriverHost: r
+webDriverPort: r
+#selenide
+selenideWaitElementTimeoutMilliseconds: 10000
