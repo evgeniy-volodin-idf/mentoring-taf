@@ -6,6 +6,6 @@ import ui.driver.DriverManager
 open class BaseTest {
   @BeforeAll
   fun globalConfig() {
-    DriverManager.setDriverFactory().configureDriver()
+    DriverManager.configureDriver()
   }
 }

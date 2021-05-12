@@ -1,5 +1,6 @@
 package ui.po.landing
 
+import com.codeborne.selenide.Selenide.`$`
 import org.openqa.selenium.By
 import ui.elements.Button
 import ui.elements.CommonElement
@@ -14,13 +15,13 @@ class CalculatorBlock {
   private val lastLoadedElement: By = By.cssSelector("[class='mainCalculator__info__value']")
 
   fun verifyCalculatorElementsLoaded(): Boolean {
-    CommonElement.verifyElementVisible(lastLoadedElement)
-    return CommonElement.verifyElementVisible(calculatorBaseBlock)
+    CommonElement.isElementVisible(lastLoadedElement)
+    return CommonElement.isElementVisible(calculatorBaseBlock)
   }
 
-  fun getAmount(): String? = Input.getDefaultAttributeValue(amount)
+  fun getAmount(): String? = `$`(amount).value
 
-  fun getDays(): String? = Input.getDefaultAttributeValue(days)
+  fun getDays(): String? = `$`(days).value
 
   fun updateLoanAmount(updatedAmount: String) {
     Input.clearFieldAndInput(amount, updatedAmount)

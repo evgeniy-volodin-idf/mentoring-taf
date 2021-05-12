@@ -6,7 +6,7 @@ import org.openqa.selenium.By
 import java.time.Duration
 
 object CommonElement {
-  fun verifyElementVisible(locator: By): Boolean {
+  fun isElementVisible(locator: By): Boolean {
     return `$`(locator).shouldBe(Condition.visible, Duration.ofSeconds(10)).exists()
   }
 }

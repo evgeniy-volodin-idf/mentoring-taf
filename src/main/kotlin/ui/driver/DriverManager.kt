@@ -1,10 +1,15 @@
 package ui.driver
 
 object DriverManager {
-  fun setDriverFactory(driverConfig: DriverConfig = DefaultDriverConfigProvider().getConfig()): DefaultDriverFactory {
-    if (driverConfig.driverType == DriverType.REMOTE)
-      return RemoteDriverFactory(driverConfig)
-    return driverSelector(driverConfig)
+  fun configureDriver(driverConfig: DriverConfig = DefaultDriverConfigProvider().getConfig()){
+    setDriverFactory(driverConfig).configureDriver()
+  }
+
+  private fun setDriverFactory(driverConfig: DriverConfig = DefaultDriverConfigProvider().getConfig()): DefaultDriverFactory {
+    return when (driverConfig.driverType) {
+      DriverType.REMOTE -> RemoteDriverFactory(driverConfig)
+      else -> driverSelector(driverConfig)
+    }
   }
 
   fun driverSelector(driverConfig: DriverConfig): DefaultDriverFactory {

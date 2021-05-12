@@ -33,7 +33,7 @@ class LandingTest : BaseTest() {
       calculatorBlock.updateDays(expectedUpdatedDays)
       Assertions.assertEquals(expectedUpdatedDays, calculatorBlock.getDays(), "Days are not updated")
       val contactInfoPage: ContactInformationPage = calculatorBlock.clickApplyForYourLoanButton()
-      Assertions.assertTrue(contactInfoPage.verifyURL(), "Client is not forwarded to registration")
+      Assertions.assertTrue(contactInfoPage.isURL(), "Client is not forwarded to registration")
     }
   }
 }

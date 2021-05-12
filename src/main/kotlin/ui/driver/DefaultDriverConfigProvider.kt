@@ -8,7 +8,9 @@ class DefaultDriverConfigProvider : DriverConfigProvider {
 
   override fun getConfig(): DriverConfig {
     val driverConfig: DriverConfig = convertFileToObject(filePath)
-    driverConfig.driverType = DriverType.valueOf(getProperty("driverType").uppercase())
+    getProperty("driverType")?.also {
+      driverConfig.driverType = DriverType.valueOf(it.uppercase())
+    }
     return driverConfig
   }
 }
