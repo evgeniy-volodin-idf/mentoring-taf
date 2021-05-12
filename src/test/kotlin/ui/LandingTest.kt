@@ -2,9 +2,11 @@ package ui
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import ui.po.ContactInformationPage
 import ui.po.landing.LandingPage
 
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class LandingTest : BaseTest() {
   private val expectedDefaultAmount = "1,500"
   private val expectedUpdatedAmount = "4,000"
@@ -15,7 +17,7 @@ class LandingTest : BaseTest() {
   fun landingPageVerify() {
     LandingPage().apply {
       openPage()
-      Assertions.assertTrue(calculatorBlock.verifyCalculatorElementsLoaded(), "Calculator is not displayed")
+      calculatorBlock.verifyCalculatorElementsLoaded()
       Assertions.assertEquals(
         expectedDefaultAmount,
         calculatorBlock.getAmount(),
@@ -31,7 +33,7 @@ class LandingTest : BaseTest() {
       calculatorBlock.updateDays(expectedUpdatedDays)
       Assertions.assertEquals(expectedUpdatedDays, calculatorBlock.getDays(), "Days are not updated")
       val contactInfoPage: ContactInformationPage = calculatorBlock.clickApplyForYourLoanButton()
-      Assertions.assertTrue(contactInfoPage.verifyURL(), "Client is not forwarded to registration")
+      Assertions.assertTrue(contactInfoPage.isPageUrlValid(), "Client is not forwarded to registration")
     }
   }
 }

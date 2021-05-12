@@ -1,11 +1,11 @@
 package ui
 
-import org.junit.jupiter.api.AfterEach
-import ui.driver.WebDriverSingleton
+import org.junit.jupiter.api.BeforeAll
+import ui.driver.DriverManager
 
 open class BaseTest {
-  @AfterEach
-  fun quitDriver() {
-    WebDriverSingleton.getDriver().quit()
+  @BeforeAll
+  fun globalConfig() {
+    DriverManager.configureDriver()
   }
 }

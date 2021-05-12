@@ -2,12 +2,8 @@ package ui.po.landing
 
 import ui.po.AbstractPage
 
-class LandingPage() : AbstractPage() {
-  val calculatorBlock: CalculatorBlock by lazy { CalculatorBlock(driver) }
+class LandingPage : AbstractPage() {
+  override val pageEndpoint = config.landingPageEndpoint
 
-  private val pageEndpoint = config.landingPageEndpoint
-
-  override fun openPage() {
-    driver.get("${config.getBaseUrlWithBasicAuthentication()}$pageEndpoint")
-  }
+  val calculatorBlock: CalculatorBlock by lazy { CalculatorBlock() }
 }

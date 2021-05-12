@@ -1,16 +1,16 @@
 package ui.po
 
+import com.codeborne.selenide.Selenide
 import core.config.AppConfig
 import core.config.FileType
 import core.config.YamlConfig
-import org.openqa.selenium.WebDriver
-import ui.driver.WebDriverSingleton
 
-open class AbstractPage(
-  val driver: WebDriver = WebDriverSingleton.getDriver(),
+abstract class AbstractPage(
   val config: AppConfig = YamlConfig().getConfig(FileType.YAML)
 ) {
-  open fun openPage() {
-    driver.get(config.getBaseUrlWithBasicAuthentication())
+  abstract val pageEndpoint: String
+
+  fun openPage(){
+    Selenide.open("${config.getBaseUrlWithBasicAuthentication()}$pageEndpoint")
   }
 }
