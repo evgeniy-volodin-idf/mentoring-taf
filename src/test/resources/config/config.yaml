@@ -5,3 +5,5 @@ authUser:
 junkConfig: Junk config
 #Landing
 landingPageEndpoint: /
+#Registration
+contactInfoPage: /registration

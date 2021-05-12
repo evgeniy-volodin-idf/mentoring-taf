@@ -1,8 +1,8 @@
 browser: CHROME
-windowScreenSize: 1600x900
+windowScreenSize: 1920x1080
 #driver
-driverType: LOCAL
-webDriverHost: r
-webDriverPort: r
+driverType: REMOTE
+webDriverHost: 192.168.1.41
+webDriverPort: 5558
 #selenide
 selenideWaitElementTimeoutMilliseconds: 10000

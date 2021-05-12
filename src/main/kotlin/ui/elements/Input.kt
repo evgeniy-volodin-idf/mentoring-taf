@@ -5,7 +5,7 @@ import org.openqa.selenium.By
 import org.openqa.selenium.Keys
 
 object Input {
-  fun getDefaultAttributeValue(locator: By): String? = `$`(locator).getAttribute("value")
+  fun getDefaultAttributeValue(locator: By): String? = `$`(locator).value
 
   fun clearFieldAndInput(locator: By, inputValue: String) {
     `$`(locator).apply {

@@ -1,11 +1,14 @@
 package ui.driver
 
 import core.config.convertFileToObject
+import java.lang.System.getProperty
 
 class DefaultDriverConfigProvider : DriverConfigProvider {
   private val filePath: String = "driver/driverConfig.yaml"
 
   override fun getConfig(): DriverConfig {
-    return convertFileToObject(filePath)
+    val driverConfig: DriverConfig = convertFileToObject(filePath)
+    driverConfig.driverType = DriverType.valueOf(getProperty("driverType").uppercase())
+    return driverConfig
   }
 }

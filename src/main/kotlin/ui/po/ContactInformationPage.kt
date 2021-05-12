@@ -3,8 +3,9 @@ package ui.po
 import com.codeborne.selenide.WebDriverRunner.url
 
 class ContactInformationPage : AbstractPage() {
-  fun verifyURL(): Boolean {
+  override val pageEndpoint: String = config.contactInfoPage
 
-    return url().endsWith("registration")
+  fun verifyURL(): Boolean {
+    return url().endsWith(pageEndpoint)
   }
 }

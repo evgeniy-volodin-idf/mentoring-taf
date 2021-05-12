@@ -2,7 +2,7 @@ package ui.driver
 
 import com.codeborne.selenide.Configuration
 
-abstract class DefaultDriverFactory(private val driverConfig: DriverConfig) {
+abstract class DefaultDriverFactory(protected val driverConfig: DriverConfig) {
   abstract fun configureDriver()
 
   fun defaultDriverConfig() {

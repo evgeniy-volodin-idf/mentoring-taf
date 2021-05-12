@@ -2,7 +2,7 @@ package ui.po.landing
 
 import org.openqa.selenium.By
 import ui.elements.Button
-import ui.elements.ComplexElement.verifyObjectIstLoaded
+import ui.elements.CommonElement
 import ui.elements.Input
 import ui.po.ContactInformationPage
 
@@ -13,7 +13,10 @@ class CalculatorBlock {
   private val applyForYourLoanButton: By = By.cssSelector("[class='mainCalculator__center']")
   private val lastLoadedElement: By = By.cssSelector("[class='mainCalculator__info__value']")
 
-  fun verifyCalculatorElementsLoaded(): Boolean = verifyObjectIstLoaded(calculatorBaseBlock, lastLoadedElement)
+  fun verifyCalculatorElementsLoaded(): Boolean {
+    CommonElement.verifyElementVisible(lastLoadedElement)
+    return CommonElement.verifyElementVisible(calculatorBaseBlock)
+  }
 
   fun getAmount(): String? = Input.getDefaultAttributeValue(amount)
 

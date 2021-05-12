@@ -1,14 +1,16 @@
 package ui.po
 
-import com.codeborne.selenide.Selenide.open
+import com.codeborne.selenide.Selenide
 import core.config.AppConfig
 import core.config.FileType
 import core.config.YamlConfig
 
-open class AbstractPage(
+abstract class AbstractPage(
   val config: AppConfig = YamlConfig().getConfig(FileType.YAML)
 ) {
-  open fun openPage() {
-    open(config.getBaseUrlWithBasicAuthentication())
+  abstract val pageEndpoint: String
+
+  fun openPage(){
+    Selenide.open("${config.getBaseUrlWithBasicAuthentication()}$pageEndpoint")
   }
 }

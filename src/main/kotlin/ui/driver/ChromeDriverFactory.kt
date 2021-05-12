@@ -5,6 +5,6 @@ import com.codeborne.selenide.Configuration
 class ChromeDriverFactory(driverConfig: DriverConfig) : DefaultDriverFactory(driverConfig) {
   override fun configureDriver() {
     defaultDriverConfig()
-    Configuration.browser = BrowserType.CHROME.name.lowercase()
+    Configuration.browser = BrowserType.CHROME.nameToSetDriver
   }
 }

@@ -26,7 +26,7 @@ dependencies {
   testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
   testImplementation("io.mockk:mockk:${mockkVersion}")
-  api("com.codeborne:selenide:$selenideVersion")
+  implementation("com.codeborne:selenide:$selenideVersion")
 }
 
 tasks {
