@@ -17,7 +17,7 @@ class LandingTest : BaseTest() {
   fun landingPageVerify() {
     LandingPage().apply {
       openPage()
-      Assertions.assertTrue(calculatorBlock.verifyCalculatorElementsLoaded(), "Calculator is not displayed")
+      calculatorBlock.verifyCalculatorElementsLoaded()
       Assertions.assertEquals(
         expectedDefaultAmount,
         calculatorBlock.getAmount(),
@@ -33,7 +33,7 @@ class LandingTest : BaseTest() {
       calculatorBlock.updateDays(expectedUpdatedDays)
       Assertions.assertEquals(expectedUpdatedDays, calculatorBlock.getDays(), "Days are not updated")
       val contactInfoPage: ContactInformationPage = calculatorBlock.clickApplyForYourLoanButton()
-      Assertions.assertTrue(contactInfoPage.isURL(), "Client is not forwarded to registration")
+      Assertions.assertTrue(contactInfoPage.isPageUrlValid(), "Client is not forwarded to registration")
     }
   }
 }

@@ -5,7 +5,7 @@ object DriverManager {
     setDriverFactory(driverConfig).configureDriver()
   }
 
-  private fun setDriverFactory(driverConfig: DriverConfig = DefaultDriverConfigProvider().getConfig()): DefaultDriverFactory {
+  private fun setDriverFactory(driverConfig: DriverConfig): DefaultDriverFactory {
     return when (driverConfig.driverType) {
       DriverType.REMOTE -> RemoteDriverFactory(driverConfig)
       else -> driverSelector(driverConfig)
