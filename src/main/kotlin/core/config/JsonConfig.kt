@@ -6,8 +6,8 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import core.configProvider.ApplicationConfigProvider
 
 class JsonConfig : ApplicationConfigProvider {
-  override fun getConfig(fileType: FileType): AppConfig {
-    return Thread.currentThread().contextClassLoader.getResourceAsStream(fileType.filePath)?.use {
+  override fun getConfig(): AppConfig {
+    return Thread.currentThread().contextClassLoader.getResourceAsStream(FileType.JSON.filePath)?.use {
       ObjectMapper(JsonFactory())
         .registerModule(KotlinModule())
         .readValue(it, AppConfig::class.java)

@@ -4,5 +4,5 @@ import core.config.AppConfig
 import core.config.FileType
 
 interface ApplicationConfigProvider {
-  fun getConfig(fileType: FileType): AppConfig
+  fun getConfig(): AppConfig
 }
