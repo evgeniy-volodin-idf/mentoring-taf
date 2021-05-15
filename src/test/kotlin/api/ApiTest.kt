@@ -1,6 +1,6 @@
 package api
 
-import core.config.toJson
+import core.config.objectToJson
 import http.DefaultHttpClient
 import http.HttpClient
 import org.junit.jupiter.api.Assertions
@@ -18,9 +18,8 @@ class ApiTest : BaseApiTest() {
 
   @Test
   fun apiPost() {
-    val json = toJson(config.crmPlatformUser)
-    println(json)
+    val json = objectToJson(config.crmPlatformUser)
     val response = httpClient.post("http://${config.hostIp}${config.token}", json)
-    println(response)
+    Assertions.assertNotNull(response.body, "Token is not generated")
   }
 }

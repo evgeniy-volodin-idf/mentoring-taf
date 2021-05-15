@@ -14,7 +14,7 @@ inline fun <reified T> convertFileToObject(filePath: String): T {
   } as T ?: throw IllegalStateException("Could not get Application Config object"))
 }
 
-fun <T> toJson(objectToJson: T): String {
+fun <T> objectToJson(objectToJson: T): String {
   val mapper = jacksonObjectMapper()
   return mapper.writeValueAsString(objectToJson)
 }
