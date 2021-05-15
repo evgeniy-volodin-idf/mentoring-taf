@@ -5,6 +5,7 @@ val junitVersion: String by project
 val mockkVersion: String by project
 val seleniumVersion: String by project
 val selenideVersion: String by project
+val okhttpVersion: String by project
 
 plugins {
   kotlin("jvm") version "1.5.0"
@@ -22,11 +23,13 @@ dependencies {
   implementation("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
   implementation("com.fasterxml.jackson.module:jackson-module-kotlin:$jacksonVersion")
   implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion")
+  implementation("com.squareup.okhttp3:okhttp:$okhttpVersion")
+  implementation("com.squareup.okhttp3:logging-interceptor:$okhttpVersion")
+  implementation("com.codeborne:selenide:$selenideVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")
   testImplementation("io.mockk:mockk:${mockkVersion}")
-  implementation("com.codeborne:selenide:$selenideVersion")
 }
 
 tasks {

@@ -10,7 +10,7 @@ import org.junit.jupiter.api.assertAll
 class MmConfigJson {
   @Test
   fun jsonConfigCheck() {
-    val config: AppConfig = JsonConfig().getConfig(FileType.JSON)
+    val config: AppConfig = JsonConfig().getConfig()
 
     config.apply {
       assertAll(
