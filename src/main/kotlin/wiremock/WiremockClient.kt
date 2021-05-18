@@ -12,5 +12,5 @@ interface WiremockClient {
 
   fun getAllStub(): MutableList<StubMapping>?
 
-  fun removeStub(stubMapping: StubMapping?)
+  fun removeStub(mock: Mock)
 }

@@ -1,9 +1,12 @@
 package wiremock
 
+import http.DefaultHttpClient
+import http.HttpClient
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertAll
 
 class WiremockTest {
   private lateinit var client: WiremockClient
@@ -29,7 +32,26 @@ class WiremockTest {
   @Test
   fun verifyStubRemoved() {
     client.addStub(mock)
-    client.removeStub(client.getStub(mock))
+    client.removeStub(mock)
     Assertions.assertNull(client.getStub(mock), "Stub is not removed")
+  }
+
+  @Test
+  fun verifyResponseFromStub() {
+    val url = "http://localhost:8089/client-area/registration"
+    val httpClient: HttpClient = DefaultHttpClient()
+    val expectedEndpoint = mock.endpoint
+    val expectedCode = mock.code
+    client.addStub(mock)
+    httpClient.get(url).apply {
+      assertAll(
+        {
+          Assertions.assertTrue(url.endsWith(expectedEndpoint), "Stub return incorrect endpoint")
+        },
+        {
+          Assertions.assertEquals(expectedCode, code, "Stub return incorrect code")
+        }
+      )
+    }
   }
 }

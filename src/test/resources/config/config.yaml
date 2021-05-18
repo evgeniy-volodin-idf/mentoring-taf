@@ -17,3 +17,6 @@ crmPlatformUser:
 
 registration: /client-area/registration
 token: /mxn-auth-server/auth/token
+
+#Wiremock
+port: 8089

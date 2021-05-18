@@ -1,20 +1,21 @@
 package wiremock
 
 import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.client.WireMock.aResponse
-import com.github.tomakehurst.wiremock.client.WireMock.get
-import com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo
 import com.github.tomakehurst.wiremock.stubbing.StubMapping
+import core.config.AppConfig
+import core.config.YamlConfig
 
 class DefaultWiremockClient(
-  override val server: WireMockServer = WiremockClientBuilder.configureWiremockServer()
+  override var server: WireMockServer = WireMockServer(),
+  val config: AppConfig = YamlConfig().getConfig()
 ) : WiremockClient {
 
+  init {
+    configureWiremockServer()
+  }
+
   override fun addStub(mock: Mock) {
-    server.start()
-    val stubMapping = server.stubFor(
-      get(urlEqualTo(mock.endpoint)).willReturn(aResponse().withStatus(mock.code))
-    )
+    val stubMapping: StubMapping = server.stubFor(StubBuilder.configureStubMapping(mock))
     mock.id = stubMapping.id
   }
 
@@ -26,7 +27,11 @@ class DefaultWiremockClient(
     return server.listAllStubMappings().mappings
   }
 
-  override fun removeStub(stubMapping: StubMapping?) {
-    server.removeStub(stubMapping)
+  override fun removeStub(mock: Mock) {
+    server.removeStub(getStub(mock))
+  }
+
+  private fun configureWiremockServer() {
+    server = WireMockServer(config.port)
   }
 }
