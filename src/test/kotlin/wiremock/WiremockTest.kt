@@ -1,5 +1,7 @@
 package wiremock
 
+import core.config.AppConfig
+import core.config.YamlConfig
 import http.DefaultHttpClient
 import http.HttpClient
 import org.junit.jupiter.api.AfterEach
@@ -10,6 +12,7 @@ import org.junit.jupiter.api.assertAll
 
 class WiremockTest {
   private lateinit var client: WiremockClient
+  private val config: AppConfig = YamlConfig().getConfig()
   private val mock = Mock(endpoint = "/client-area/registration", code = 200)
 
   @BeforeEach
@@ -38,7 +41,7 @@ class WiremockTest {
 
   @Test
   fun verifyResponseFromStub() {
-    val url = "http://localhost:8089/client-area/registration"
+    val url = "http://${config.wiremockHost}:${config.wiremockPort}${mock.endpoint}"
     val httpClient: HttpClient = DefaultHttpClient()
     val expectedEndpoint = mock.endpoint
     val expectedCode = mock.code

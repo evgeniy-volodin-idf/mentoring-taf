@@ -9,7 +9,7 @@ landingPageEndpoint: /
 contactInfoPage: /registration
 
 #API
-hostIp:  10.1.1.30
+hostIp: 10.1.1.30
 crmPlatformUser:
   login: admin
   password: 7nmXbJOA1eM3/BwJXs6MjyL5HzBs7rFh+lH+zt4sS6E=
@@ -19,4 +19,5 @@ registration: /client-area/registration
 token: /mxn-auth-server/auth/token
 
 #Wiremock
-port: 8089
+wiremockPort: 8089
+wiremockHost: localhost

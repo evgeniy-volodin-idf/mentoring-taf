@@ -6,12 +6,12 @@ import core.config.AppConfig
 import core.config.YamlConfig
 
 class DefaultWiremockClient(
-  override var server: WireMockServer = WireMockServer(),
-  val config: AppConfig = YamlConfig().getConfig()
+  val config: AppConfig = YamlConfig().getConfig(),
+  override var server: WireMockServer = configureWiremockServer(config)
 ) : WiremockClient {
 
-  init {
-    configureWiremockServer()
+  companion object {
+    private fun configureWiremockServer(config: AppConfig): WireMockServer = WireMockServer(config.wiremockPort)
   }
 
   override fun addStub(mock: Mock) {
@@ -29,9 +29,5 @@ class DefaultWiremockClient(
 
   override fun removeStub(mock: Mock) {
     server.removeStub(getStub(mock))
-  }
-
-  private fun configureWiremockServer() {
-    server = WireMockServer(config.port)
   }
 }
