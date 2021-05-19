@@ -14,7 +14,9 @@ data class AppConfig(
   val hostIp: String,
   val crmPlatformUser: PlatformUser,
   val registration: String,
-  val token: String
+  val token: String,
+  val wiremockPort: Int,
+  val wiremockHost: String
 ) {
   fun getBaseUrlWithBasicAuthentication() = "https://${authUser.user}:${authUser.pass}@$host"
 }
