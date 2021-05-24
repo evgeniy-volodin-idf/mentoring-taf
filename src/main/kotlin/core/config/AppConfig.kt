@@ -16,7 +16,13 @@ data class AppConfig(
   val registration: String,
   val token: String,
   val wiremockPort: Int,
-  val wiremockHost: String
+  val wiremockHost: String,
+  val dbHost: String,
+  val dbPort: String,
+  val dbEnv: String,
+  val dbUser: String,
+  val dbPassword: String,
+  val dbUserAccountTable: String
 ) {
   fun getBaseUrlWithBasicAuthentication() = "https://${authUser.user}:${authUser.pass}@$host"
 }
