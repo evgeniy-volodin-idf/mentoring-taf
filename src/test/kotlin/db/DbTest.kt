@@ -32,13 +32,14 @@ class DbTest {
     val id = "4682"
     val query: SqlQuery = sqlQuery(
       """SELECT *
-                    FROM ${config.dbUserAccountTable}
-                    WHERE id = ?""", id
+                  FROM ${config.dbUserAccountTable}
+                  WHERE id = ?
+               """,
+      id
     )
-    dbClient.selectOneRow(
-      query
-    ).apply {
-      Assertions.assertEquals(expectedEmail, get("email"), "Incorrect email for $id")
+
+    dbClient.selectOneRow(query).also { resultSet: Map<String, Any?> ->
+      Assertions.assertEquals(expectedEmail, resultSet["email"], "Incorrect email for $id")
     }
   }
 
@@ -47,11 +48,14 @@ class DbTest {
     val roleId = 60
     val query: SqlQuery = sqlQuery(
       """SELECT *
-                    FROM ${config.dbUserAccountTable}
-                    WHERE role_id = ?""", roleId
+                  FROM ${config.dbUserAccountTable}
+                  WHERE role_id = ?
+               """,
+      roleId
     )
-    dbClient.selectAllRows(query).apply {
-      Assertions.assertTrue(this.size > 1, "Single row in result")
+
+    dbClient.selectAllRows(query).also { resultSet: List<Map<String, Any?>> ->
+      Assertions.assertTrue(resultSet.size > 1, "Single row in result")
     }
   }
 }

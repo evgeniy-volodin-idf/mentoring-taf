@@ -1,7 +1,7 @@
 app_host: qa-delivery-mx-master.moneyman.ru
 authUser:
   user: moneyman
-  pass: 1005
+  pass:
 junkConfig: Junk config
 #Landing
 landingPageEndpoint: /
@@ -27,5 +27,5 @@ dbHost: 10.1.1.49
 dbPort: 3306
 dbEnv: mx_master_moneyman
 dbUser: automation-tests
-dbPassword: Isdklf564tf89ODasfj35645traefdsf
+dbPassword:
 dbUserAccountTable: mx_master_moneyman.user_account
