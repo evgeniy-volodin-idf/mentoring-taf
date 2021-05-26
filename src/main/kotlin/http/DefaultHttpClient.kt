@@ -9,6 +9,7 @@ import okhttp3.Request
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.Response
+import org.apache.logging.log4j.kotlin.logger
 
 class DefaultHttpClient(
   private val client: OkHttpClient = HttpClientBuilder.generateHttpClientWithInterceptors(),
@@ -19,6 +20,9 @@ class DefaultHttpClient(
       .url(urlGet)
       .addHeader(HEADER_AUTHORIZATION, Credentials.basic(config.authUser.user, config.authUser.pass))
       .build()
+    logger().info("""Sent GET request to url:
+    $urlGet
+    """.trimMargin())
     return client.newCall(request).execute()
   }
 
@@ -28,6 +32,11 @@ class DefaultHttpClient(
       .url(urlPost)
       .post(body)
       .build()
+    logger().info("""Sent Post request to URL:
+    $urlPost
+    Body:
+    $bodyJSON
+    """.trimMargin())
     return client.newCall(request).execute()
   }
 
