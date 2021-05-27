@@ -9,7 +9,8 @@ val okhttpVersion: String by project
 val wiremockVersion: String by project
 val kotlinJdbcVersion: String by project
 val mysqlConnectorJavaVersion: String by project
-val log4jVersion: String by project
+val log4j2Version: String by project
+val log4j2KotlinVersion: String by project
 
 plugins {
   kotlin("jvm") version "1.5.0"
@@ -45,9 +46,9 @@ dependencies {
   implementation("com.github.tomakehurst:wiremock-jre8:$wiremockVersion")
   implementation("mysql:mysql-connector-java:$mysqlConnectorJavaVersion")
   implementation("com.vladsch.kotlin-jdbc:kotlin-jdbc:$kotlinJdbcVersion")
-  implementation( "org.apache.logging.log4j:log4j-api-kotlin:1.0.0")
-  implementation("org.apache.logging.log4j:log4j-api:2.11.1")
-  implementation("org.apache.logging.log4j:log4j-core:2.11.1")
+  implementation( "org.apache.logging.log4j:log4j-api-kotlin:$log4j2KotlinVersion")
+  implementation("org.apache.logging.log4j:log4j-api:$log4j2Version")
+  implementation("org.apache.logging.log4j:log4j-core:$log4j2Version")
   testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
   testImplementation("org.junit.jupiter:junit-jupiter-params:$junitVersion")

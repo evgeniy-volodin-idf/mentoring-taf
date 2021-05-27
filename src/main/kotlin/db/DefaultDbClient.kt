@@ -11,16 +11,17 @@ class DefaultDbClient(val config: AppConfig = YamlConfig().getConfig()) : DbClie
   private var session: Session? = null
 
   override fun getClient(): Session {
+    val dbUrl = "jdbc:mysql://${config.dbHost}:${config.dbPort}/${config.dbEnv}"
     if (session == null) {
       session = session(
-        url = "jdbc:mysql://${config.dbHost}:${config.dbPort}/${config.dbEnv}",
+        url = dbUrl,
         user = config.dbUser,
         password = config.dbPassword
       )
     }
     logger().info(
       """Session created with parameters: 
-       url - jdbc:mysql://${config.dbHost}:${config.dbPort}/${config.dbEnv}
+       url - $dbUrl
        user - ${config.dbUser}
        pass = *****
        """
