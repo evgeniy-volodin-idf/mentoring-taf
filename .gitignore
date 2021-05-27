@@ -5,7 +5,7 @@ build
 out
 gen
 .allure
-/mm-automation/**/allure-results/
+/allure-results
 
 # Java template
 *.class
